@@ -1,6 +1,6 @@
 {
-  "name": "cs-nade-practice-prompt",
-  "version": "0.0.1",
+  "name": "cs-nade-practice-prompts",
+  "version": "0.1.0",
   "description": "",
   "main": "index.js",
   "type": "module",
