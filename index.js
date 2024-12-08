@@ -10,19 +10,20 @@ targetGrenades.map(name => {
 console.debug("Configuration:");
 console.debug(config);
 
-let target = null;
+let prevTarget = null;
 chooseRandomGrenade(targetGrenades)
 setInterval(chooseRandomGrenade, config.intervalS * 1000, targetGrenades);
 
 function chooseRandomGrenade(targetGrenades) {
   const nextGrenadeWarningS = (config.intervalS - 5) - 1;
-  let randomIndex;
+  let newTarget;
   do {
-    randomIndex = Math.floor(Math.random() * targetGrenades.length);
-    target = targetGrenades[randomIndex];
-  } while (frequency[target] > Math.min(...Object.values(frequency)));
-  frequency[target] = frequency[target] ? frequency[target] + 1 : 1;
-  displayNewPrompt(targetGrenades, randomIndex);
+    const randomIndex = Math.floor(Math.random() * targetGrenades.length);
+    newTarget = targetGrenades[randomIndex];
+  } while (frequency[newTarget] > Math.min(...Object.values(frequency)) || prevTarget === newTarget);
+  prevTarget = newTarget;
+  frequency[newTarget] = frequency[newTarget] ? frequency[newTarget] + 1 : 1;
+  displayNewPrompt(newTarget);
   
   setTimeout(function () {
     let countdownS = 5;
@@ -37,12 +38,12 @@ function chooseRandomGrenade(targetGrenades) {
   }, nextGrenadeWarningS * 1000)
 }
 
-function displayNewPrompt(grenadeList, index) {
+function displayNewPrompt(target) {
   console.clear();
   console.log(
     `On ${config.map.toUpperCase()}, ` +
     `throw a ${config.grenade.toUpperCase()} grenade ` +
-    `for ${grenadeList[index].toUpperCase()} ` +
+    `for ${target.toUpperCase()} ` +
     `around ${config.area.toUpperCase()}.`
   );
 }
