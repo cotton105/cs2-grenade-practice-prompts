@@ -15,4 +15,4 @@ Execute the script:
 node ./index.js --map <mapname> --grenade <grenadetype> --area <maparea> --interval <intervalsecs>
 ```
 
-It reads known grenades from the file [`/prompts.json`](./prompts.json). This allows the user to configure the grenades they know and want to practice. There is a sample file [`/prompts_sample.json`](./prompts_sample.json) which demonstrates the expected structure.
+It reads known grenades from the local file `/prompts.json`. This allows the user to configure the grenades they know and want to practice. There is a sample file [`/prompts_sample.json`](./prompts_sample.json) which demonstrates the expected structure.
