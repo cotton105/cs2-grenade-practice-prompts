@@ -2,16 +2,26 @@ import config from './config.js';
 import prompts from './prompts.json' assert { type: 'json' };
 
 const targetGrenades = prompts[config.map][config.grenade][config.area];
+let frequency = {};
+targetGrenades.map(name => {
+  frequency[name] = 0;
+});
 
 console.debug("Configuration:");
 console.debug(config);
 
+let target = null;
 chooseRandomGrenade(targetGrenades)
 setInterval(chooseRandomGrenade, config.intervalS * 1000, targetGrenades);
 
 function chooseRandomGrenade(targetGrenades) {
-  const randomIndex = Math.floor(Math.random() * targetGrenades.length);
   const nextGrenadeWarningS = (config.intervalS - 5) - 1;
+  let randomIndex;
+  do {
+    randomIndex = Math.floor(Math.random() * targetGrenades.length);
+    target = targetGrenades[randomIndex];
+  } while (frequency[target] > Math.min(...Object.values(frequency)));
+  frequency[target] = frequency[target] ? frequency[target] + 1 : 1;
   displayNewPrompt(targetGrenades, randomIndex);
   
   setTimeout(function () {
