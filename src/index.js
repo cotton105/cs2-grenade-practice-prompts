@@ -1,5 +1,5 @@
 import config from './config.js';
-import prompts from './prompts.json' assert { type: 'json' };
+import prompts from '../prompts.json' assert { type: 'json' };
 
 const targetGrenades = prompts[config.map][config.grenade][config.area];
 let frequency = {};
